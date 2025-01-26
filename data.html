@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data - Urban Heat Sense</title>
+    <!-- Leaflet CSS for the map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        #map {
+            height: 60vh;
+            margin: 1rem auto;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+        }
+        .custom-marker {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background-color: rgb(247, 246, 247);
+            color: rgb(8, 8, 8);
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            border-radius: 50%;
+            border: 2px solid rgb(7, 7, 7);
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="data.html" class="active">Data</a></li>
+                <li><a href="getinvolved.html">Get Involved</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section>
+            <h1>Live Data</h1>
+            <p>Explore our real-time air temperature data across London. The map below shows current readings from our IoT sensors.</p>
+        </section>
+
+        <section id="map-container">
+            <h2>Live Map</h2>
+            <div id="map"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Urban Heat Sense</p>
+        <p>Contact: dongyi.ma.21@ucl.ac.uk</p>
+    </footer>
+
+    <!-- Leaflet JavaScript for the map -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- MQTT JavaScript -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([51.538347, -0.012895], 15);
+
+        // Add a light, minimalist base map
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Define coordinates for each topic
+        const coordinates = {
+            "student/ucfndma/live_heat_map/eui-a8610a353935710f": [51.53912, -0.009864],
+            "student/ucfndma/live_heat_map/eui-a8610a3230306217": [51.538284, -0.010904],
+            "student/ucfndma/live_heat_map/eui-a8610a34364b7a0f": [51.536883, -0.011988],
+            "student/ucfndma/live_heat_map/eui-a8610a35394f700f": [51.539012, -0.011381],
+            "student/ucfndma/live_heat_map/eui-a8610a34364c7f16": [51.540386, -0.012249],
+            "student/ucfndma/live_heat_map/eui-a8610a35394d7b06": [51.541141, -0.010774],
+            "student/ucfndma/live_heat_map/eui-a8610a32302b8716": [51.539632, -0.013419],
+            "student/ucfndma/live_heat_map/eui-a8610a3539227d05": [51.542138, -0.016151],
+            "student/ucfndma/live_heat_map/eui-a8610a3432336e0f": [51.544941, -0.019619],
+            "student/ucfndma/live_heat_map/eui-a8610a343224710f": [51.546397, -0.022698],
+            "student/ucfndma/live_heat_map/eui-a8610a34324b6e0f": [51.549119, -0.02157],
+            "student/ucfndma/live_heat_map/eui-a8610a3539356f0f": [51.548175, -0.015674],
+            "student/ucfndma/live_heat_map/eui-a8610a32301f8716": [51.548283, -0.018796],
+            "student/ucfndma/live_heat_map/eui-a8610a32302a8419": [51.545723, -0.017495],
+            "student/ucfndma/live_heat_map/eui-a8610a34322a710f": [51.544483, -0.017538]
+        };
+
+        // Function to create custom markers
+        function createCustomMarker(temperature) {
+            const html = `<div class="custom-marker">${temperature.toFixed(1)}°C</div>`;
+            return L.divIcon({
+                className: '',
+                html: html,
+                iconSize: [60, 60],
+                iconAnchor: [30, 30]
+            });
+        }
+
+        // Initialize markers for each coordinate
+        const labels = {};
+
+        for (const topic in coordinates) {
+            const [lat, lng] = coordinates[topic];
+            const temperature = 0; // Initial temperature placeholder
+            const marker = L.marker([lat, lng], { icon: createCustomMarker(temperature) }).addTo(map);
+            labels[topic] = marker;
+        }
+
+        // Connect to the MQTT broker
+        var mqtt_server = "mqtts://mqtt.cetools.org";
+        var client = mqtt.connect(mqtt_server + ":8081", {});
+
+        client.on("connect", function () {
+            console.log("Connected to the MQTT server");
+            // Subscribe to all topics
+            for (const topic in coordinates) {
+                client.subscribe(topic);
+            }
+        });
+
+        client.on("message", function (topic, message) {
+            console.log(`Message received on ${topic}: ${message.toString()}`);
+            const temperature = JSON.parse(message.toString()).temperature;
+            if (labels[topic]) {
+                labels[topic].setIcon(createCustomMarker(temperature));
+            }
+        });
+    </script>
+</body>
+</html>
