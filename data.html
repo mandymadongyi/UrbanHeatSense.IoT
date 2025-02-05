@@ -8,9 +8,15 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <link rel="stylesheet" href="css/styles.css">
     <style>
+        #map-container {
+            text-align: center;
+            padding: 2rem 0;
+        }
         #map {
             height: 60vh;
-            margin: 1rem auto;
+            width: 90%;
+            max-width: 1000px;
+            margin: 0 auto;
             border: 2px solid #ccc;
             border-radius: 8px;
         }
@@ -29,6 +35,28 @@
             border: 2px solid rgb(7, 7, 7);
             box-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
+        .content-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            text-align: left;
+            padding: 1rem;
+        }
+        .content-container h2 {
+            text-align: center;
+        }
+        .content-container img {
+            width: 100%;
+            max-width: 600px;
+            border-radius: 8px;
+            display: block;
+            margin: 1rem auto;
+        }
+        .content-container ul {
+            text-align: left;
+            display: inline-block;
+            width: 100%;
+            padding-left: 20px;
+        }
     </style>
 </head>
 <body>
@@ -36,28 +64,69 @@
         <nav>
             <ul>
                 <li><a href="about.html">About</a></li>
-                <li><a href="data.html" class="active">Data</a></li>
+                <li><a href="data.html" class="active">Live Data</a></li>
                 <li><a href="getinvolved.html">Get Involved</a></li>
                 <li><a href="faq.html">FAQ</a></li>
             </ul>
         </nav>
     </header>
 
-    <main>
-        <section>
-            <h1>Live Data</h1>
-            <p>Explore our real-time air temperature data across London. The map below shows current readings from our IoT sensors.</p>
-        </section>
+    <!-- Live Map at the Top -->
+    <section id="map-container">
+        <h1>Live Map</h1>
+        <p>View real-time air temperature data across London. Each marker represents an IoT sensor, displaying the latest temperature readings.</p>
+        <div id="map"></div>
+    </section>
 
-        <section id="map-container">
-            <h2>Live Map</h2>
-            <div id="map"></div>
-        </section>
-    </main>
+      <!-- Detailed Project Information -->
+      <section class="content-container">
+        <h2>How We Collect and Use the Data</h2>
+        <p>Urban Heat Sense is an ongoing research initiative at UCL’s Centre for Advanced Spatial Analysis (CASA), designed to improve real-time monitoring of urban microclimates. Our network of LoRaWAN-enabled temperature sensors is deployed in various locations across London, helping researchers, policymakers, and communities understand how urban heat islands (UHIs) develop and evolve over time.</p>
+        <p>Each sensor records air temperature every 5 minutes, transmitting data wirelessly to our server. This allows for continuous, high-resolution monitoring of urban microclimates, complementing traditional weather stations that may be too sparse to capture local heat variations.</p>
+
+        <h2>Why This Research Matters</h2>
+        <p>Urban Heat Islands (UHIs) occur when cities experience significantly higher temperatures than surrounding rural areas due to human activity, concrete surfaces, and limited vegetation. This phenomenon is becoming more severe due to climate change, increasing the risk of heat stress, respiratory issues, and heat-related illnesses, particularly for vulnerable populations.</p>
+        <p>By crowdsourcing data from public spaces, schools, and private gardens, this project aims to provide a granular, city-wide understanding of UHIs, allowing for:</p>
+        <ul>
+            <li>✅ <strong>Better urban planning</strong> – Informing local councils on heat mitigation strategies such as tree planting and reflective building materials.</li>
+            <li>✅ <strong>Community awareness</strong> – Enabling citizens to see how their local environment is affected by temperature changes.</li>
+            <li>✅ <strong>Scientific validation</strong> – Improving climate models through high-resolution, real-time temperature mapping.</li>
+        </ul>
+
+        <h2>Expanding the Network</h2>
+        <p>We currently have 43 operational sensors deployed across London, including in:</p>
+        <ul>
+            <li>📍 <strong>Schools in partnership with the Greater London Authority (GLA)</strong> – Helping students engage with real-world climate data.</li>
+            <li>📍 <strong>Queen Elizabeth Olympic Park (QEOP)</strong> – Studying the cooling effects of green spaces and water bodies.</li>
+            <li>📍 <strong>Privately owned locations</strong> – Allowing citizen scientists to contribute directly to environmental monitoring.</li>
+        </ul>
+
+        <p>As part of our next phase, we are expanding the network through community participation. Our sensor designs are open-source, allowing anyone to build and deploy their own unit. You can:</p>
+        <ul>
+            <li>🔹 Order/Print a pre-assembled Printed Circuit Board (PCB).</li>
+            <li>🔹 Order/Download and 3D-print the Stevenson screen enclosure.</li>
+            <li>🔹 Join our workshops to learn how to assemble and install the sensors yourself.</li>
+        </ul>
+
+        <p>This collaborative approach increases spatial coverage, enhances public engagement, and helps bridge the gap between scientific research and real-world climate action.</p>
+
+        <img src="images/sensor.jpg" alt="Urban Heat Sense Sensor">
+        <h2>How to Interpret the Map</h2>
+        <p>The map displays real-time temperature readings from our deployed sensors. Each marker represents a sensor, and the number inside indicates the current temperature in °C.</p>
+        <ul>
+            <li>Higher temperatures tend to occur in built-up areas with dense infrastructure and little greenery.</li>
+            <li>Lower temperatures are often recorded in parks, near water bodies, or in areas with high vegetation cover.</li>
+            <li>Temperature readings fluctuate throughout the day, with peaks in the afternoon and cooling at night.</li>
+        </ul>
+        <p><strong>Missing Data?</strong> If you do not see your sensor’s data within 3 days of deployment, please contact Mandy at <a href="mailto:dongyi.ma.21@ucl.ac.uk">dongyi.ma.21@ucl.ac.uk</a>.</p>
+
+    </section>
 
     <footer>
-        <p>&copy; 2025 Urban Heat Sense</p>
-        <p>Contact: dongyi.ma.21@ucl.ac.uk</p>
+        <p>&copy; Urban Heat Sense</p>
+        <p>Contact: Dongyi Ma (Mandy) - <a href="mailto:dongyi.ma.21@ucl.ac.uk">dongyi.ma.21@ucl.ac.uk</a></p>
+        <p>Connected Environments Lab, CASA - The Bartlett School, UCL</p>
+        <p>107, 1 Pool Street, E20 2AF, London</p>
     </footer>
 
     <!-- Leaflet JavaScript for the map -->
@@ -119,7 +188,6 @@
 
         client.on("connect", function () {
             console.log("Connected to the MQTT server");
-            // Subscribe to all topics
             for (const topic in coordinates) {
                 client.subscribe(topic);
             }

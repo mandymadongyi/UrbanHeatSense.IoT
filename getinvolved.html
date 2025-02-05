@@ -1,37 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Get Involved - Urban Heat Sense</title>
-  <link rel="stylesheet" href="css/styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Involved - Urban Heat Sense</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        section {
+            margin: 2rem auto;
+            padding: 1rem;
+            max-width: 800px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        iframe {
+            display: block;
+            margin: 1rem auto;
+            width: 100%;
+            max-width: 600px;
+            height: 340px;
+            border: none;
+        }
+        .email-link {
+            color: #007acc;
+            text-decoration: none;
+        }
+        .email-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <ul>
-        <li><a href="about.html">About</a></li>
-        <li><a href="data.html">Data</a></li>
-        <li><a href="getinvolved.html">Get Involved</a></li>
-        <li><a href="faq.html">FAQ</a></li>
-      </ul>
-    </nav>
-  </header>
-  <main>
-    <section class="get-involved">
-      <h1>Get Involved</h1>
-      <p>Join our citizen science initiative! Follow these steps to deploy your own sensor:</p>
-      <ol>
-        <li>Assemble your sensor using the user manual.</li>
-        <li>Watch the video tutorial below for guidance.</li>
-        <li>Submit your deployment details using the provided form.</li>
-      </ol>
-      <a href="manual.pdf" class="button">Download User Manual</a>
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+
+    <!-- Header (Added but Layout Unchanged) -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="about.html">About</a></li>
+                <li><a href="data.html">Live Data</a></li>
+                <li><a href="getinvolved.html">Get Involved</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <header>
+        <h1 style="text-align: center;">Get Involved with Urban Heat Sense</h1>
+    </header>
+    
+
+    <section id="user-manual">
+        <h2>How to Set Up and Deploy Your Urban Heat Sense Sensor</h2>
+        <h3>Parts Included:</h3>
+        <ul>
+            <li>Sensor device</li>
+            <li>Stevenson screen (enclosure)</li>
+            <li>Antenna</li>
+            <li>Cable ties</li>
+            <li>Battery</li>
+        </ul>
+        <h3>Step-by-Step Instructions:</h3>
+        <ol>
+            <li><strong>Insert the Battery:</strong> Open the sensor casing and insert the provided battery. Ensure it is securely in place.</li>
+            <li><strong>Attach the Antenna:</strong> Peel off the adhesive backing and attach the antenna to the side of the sensor box.</li>
+            <li><strong>Assemble the Stevenson Screen:</strong> Place the sensor inside the screen. Align the middle and bottom layers of the screen and secure them using the screws provided.</li>
+            <li><strong>Mount the Sensor:</strong> Use cable ties to attach the Stevenson screen to a stable pole or fence. Ensure it is mounted 2-3 meters above the ground and facing north.</li>
+            <li><strong>Find Your Location:</strong> Use your smartphone or a mapping tool to determine the latitude and longitude of your deployment site.</li>
+            <li><strong>Submit Deployment Details:</strong> Take a photo of the deployment site. Fill in the provided <a href="#">online form</a> with your location, device ID, and photo.</li>
+            <li><strong>Done!</strong> Your live temperature data will appear on our website map within 3 working days.</li>
+        </ol>
     </section>
-  </main>
-  <footer>
-    <p>&copy; 2025 Urban Heat Sense</p>
-  </footer>
+
+    <section id="video">
+        <h2>Need Help? Watch the Tutorial Video</h2>
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Urban Heat Sense Tutorial"></iframe>
+    </section>
+
+    <section id="faq-link">
+        <h2>Still Have Questions?</h2>
+        <p>Visit our <a href="faq.html">FAQ page</a> for common troubleshooting steps and additional information.</p>
+        <p>If your issue is not resolved, feel free to email us at <a href="mailto:dongyi.ma.21@ucl.ac.uk" class="email-link">dongyi.ma.21@ucl.ac.uk</a>.</p>
+    </section>
+
+    <!-- Footer (Added but Layout Unchanged) -->
+    <footer>
+        <p>&copy; Urban Heat Sense</p>
+        <p>Contact: Dongyi Ma (Mandy) - <a href="mailto:dongyi.ma.21@ucl.ac.uk">dongyi.ma.21@ucl.ac.uk</a></p>
+        <p>Connected Environments Lab, CASA - The Bartlett School, UCL</p>
+        <p>107, 1 Pool Street, E20 2AF, London</p>
+    </footer>
+
 </body>
 </html>
