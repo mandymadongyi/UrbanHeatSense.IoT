@@ -13,12 +13,12 @@
             padding: 2rem 0;
         }
         #map {
-            height: 60vh;
-            width: 90%;
-            max-width: 1000px;
-            margin: 0 auto;
-            border: 2px solid #ccc;
-            border-radius: 8px;
+            height: 70vh;      /* 高度占满整个浏览器可见区域 */
+    width: 100%;       /* 宽度占满整个屏幕 */
+    max-width: none;     /* 去除最大宽度限制 */
+    margin: 0;           /* 去除外边距 */
+    border: none;        /* 去除边框 */
+    border-radius: 0;    /* 去除圆角 */
         }
         .custom-marker {
             display: flex;
@@ -158,8 +158,21 @@
             "student/ucfndma/live_heat_map/eui-a8610a3539356f0f": [51.548175, -0.015674],
             "student/ucfndma/live_heat_map/eui-a8610a32301f8716": [51.548283, -0.018796],
             "student/ucfndma/live_heat_map/eui-a8610a32302a8419": [51.545723, -0.017495],
-            "student/ucfndma/live_heat_map/eui-a8610a34322a710f": [51.544483, -0.017538]
-        };
+            "student/ucfndma/live_heat_map/eui-a8610a34322a710f": [51.544483, -0.017538],
+
+            "student/ucfndma/live_heat_map/cs1martin":          [51.627479, 0.042655],
+            "student/ucfndma/live_heat_map/cs2yaman":           [51.554248, -0.002262],
+            "student/ucfndma/live_heat_map/cs3duncanallotment": [51.596917, -0.148661],
+            "student/ucfndma/live_heat_map/cs4duncanpavement":  [51.596485, -0.146974],
+            "student/ucfndma/live_heat_map/cs5kate":            [51.589416, -0.138767],
+            "student/ucfndma/live_heat_map/cs6steve":           [51.6010, -0.3972],
+            //"student/ucfndma/live_heat_map/cs7josephboat":      [51.534748, -0.019157],
+            //"student/ucfndma/live_heat_map/cs8josephshop":      [51.535368, -0.013532],
+            "student/ucfndma/live_heat_map/cs9richard":         [51.44976343, -0.18842554],
+            "student/ucfndma/live_heat_map/cs10jon":            [51.594996, -0.033173],
+            "student/ucfndma/live_heat_map/cs11gordon":         [51.525158, -0.132332],
+            "student/ucfndma/live_heat_map/cs12mandy":          [51.541157, -0.007677]
+                };
 
         // Function to create custom markers
         function createCustomMarker(temperature) {
