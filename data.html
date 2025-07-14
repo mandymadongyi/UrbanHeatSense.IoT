@@ -74,7 +74,7 @@
     <!-- Live Map at the Top -->
     <section id="map-container">
         <h1>Live Map</h1>
-        <p>View real-time air temperature data across London. Each marker represents an IoT sensor, displaying the latest temperature readings.</p>
+        <p>View real-time air temperature data across London. Each marker represents an IoT sensor, displaying the latest temperature readings. Click on a marker to see the last time its data was updated.</p>
         <div id="map"></div>
     </section>
 
@@ -179,31 +179,61 @@
 
                 };
 
-        // Function to create custom markers
-        function createCustomMarker(temperature) {
+       // Initialize markers for each coordinate
+        // This object will store the L.Marker objects for each topic
+        const sensorMarkers = {}; // Renamed from 'labels' for clarity
+
+        // Function to create custom marker icons (only displays temperature)
+        function createCustomMarkerIcon(temperature) {
             const html = `<div class="custom-marker">${temperature.toFixed(1)}°C</div>`;
             return L.divIcon({
-                className: '',
+                className: '', // Leave empty, custom-marker is in html
                 html: html,
                 iconSize: [60, 60],
                 iconAnchor: [30, 30]
             });
         }
 
-        // Initialize markers for each coordinate
-        const labels = {};
+        // --- START CHANGE 1 ---
+        // Helper function to format timestamp (for Date object)
+        function formatLocalTimestamp(dateObject) {
+            if (!(dateObject instanceof Date) || isNaN(dateObject.getTime())) {
+                return "Timestamp N/A"; // Fallback for invalid dates
+            }
+            // Formats to DD/MM/YYYY HH:MM:SS (e.g., 14/07/2025 12:08:26)
+            return dateObject.toLocaleString('en-GB', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false // Use 24-hour format
+            });
+        }
+        // --- END CHANGE 1 ---
 
+        // Loop through defined coordinates to create initial markers
+        // --- START CHANGE 2 ---
+        // REPLACE the ENTIRE existing for loop that creates markers with this:
         for (const topic in coordinates) {
             const [lat, lng] = coordinates[topic];
-            const temperature = 0; // Initial temperature placeholder
-            const marker = L.marker([lat, lng], { icon: createCustomMarker(temperature) }).addTo(map);
-            labels[topic] = marker;
+            // Initial temperature is 0, will be updated by MQTT
+            const marker = L.marker([lat, lng], { icon: createCustomMarkerIcon(0) }).addTo(map);
+            
+            // Store the marker in our sensorMarkers object
+            sensorMarkers[topic] = marker;
+
+            // Bind an initial, empty popup. Its content will be updated on message receipt.
+            marker.bindPopup(""); 
         }
+        // --- END CHANGE 2 ---
 
         // Connect to the MQTT broker
-        var mqtt_server = "mqtts://mqtt.cetools.org";
-        var client = mqtt.connect(mqtt_server + ":8081", {});
+        var mqtt_server = "mqtts://mqtt.cetools.org"; // Ensure this uses wss:// if on HTTPS, or ws:// if on HTTP
+        var client = mqtt.connect(mqtt_server + ":8081", {}); // Note: 8081 is common for secure websockets (wss) for MQTT
 
+        // MQTT Client Event Handlers
         client.on("connect", function () {
             console.log("Connected to the MQTT server");
             for (const topic in coordinates) {
@@ -211,13 +241,58 @@
             }
         });
 
+        // --- START CHANGE 3 ---
+        // REPLACE the ENTIRE existing client.on("message", ...) function with this:
         client.on("message", function (topic, message) {
             console.log(`Message received on ${topic}: ${message.toString()}`);
-            const temperature = JSON.parse(message.toString()).temperature;
-            if (labels[topic]) {
-                labels[topic].setIcon(createCustomMarker(temperature));
+            try {
+                const payload = JSON.parse(message.toString()); // Parse the JSON message
+                const temperature = payload.temperature; // Extract temperature
+                
+                // Get the current local time when the message is received by the browser
+                const currentLocalTime = new Date(); 
+                const formattedLocalTimestamp = formatLocalTimestamp(currentLocalTime);
+                
+                const marker = sensorMarkers[topic]; // Get the existing marker for this topic
+
+                if (marker) {
+                    // Update the marker icon with the new temperature
+                    marker.setIcon(createCustomMarkerIcon(temperature));
+                    
+                    // Update the popup content with temperature and timestamp
+                    // This content will be shown when the marker is clicked
+                    const popupContent = `
+                        <div class="sensor-popup">
+                            <strong>Temperature:</strong> ${temperature.toFixed(1)}°C<br>
+                            <strong>Last Updated:</strong> ${formattedLocalTimestamp}
+                        </div>
+                    `;
+                    marker.setPopupContent(popupContent);
+                }
+
+            } catch (e) {
+                console.error(`Error parsing MQTT message on topic ${topic}:`, e);
+                // Log the raw message if parsing fails
+                console.error("Raw MQTT message:", message.toString());
             }
         });
+        // --- END CHANGE 3 ---
+
+        // Error handling for MQTT client
+        client.on("error", function (err) {
+            console.error("MQTT Client Error:", err);
+            // Consider adding a visual indicator on the map or page
+        });
+
+        client.on("close", function () {
+            console.log("MQTT Client Disconnected");
+            // Consider reconnecting or showing a disconnected status
+        });
+
+        client.on("reconnect", function () {
+            console.log("MQTT Client Reconnecting...");
+        });
+
     </script>
 </body>
 </html>
