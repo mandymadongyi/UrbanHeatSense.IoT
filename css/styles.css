@@ -108,3 +108,16 @@ footer a {
 footer a:hover {
   text-decoration: underline;
 }
+
+.hero-caption {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 10px;
+  border-radius: 5px;
+  max-width: 90%;
+}
