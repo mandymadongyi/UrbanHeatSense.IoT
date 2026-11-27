@@ -580,7 +580,7 @@ footer a:hover { text-decoration: underline; }
 /* Compact top-centred title panel with all project terms in one place. */
 #hero .hero-overlay {
   width: min(780px, calc(100% - 1.5rem));
-  margin: 8rem auto 0;
+  margin: 1rem auto 0;
   padding: 0.7rem 1.15rem 0.8rem;
   border: 1px solid rgba(173, 232, 239, 0.34);
   border-radius: 12px;
