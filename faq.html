@@ -3,51 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Answers to common questions about Urban Heat Sense sensors, LoRaWAN and project data.">
   <title>FAQ - Urban Heat Sense</title>
   <link rel="stylesheet" href="css/styles.css">
-  <style>
-    /* Centering FAQ content */
-    .faq {
-      text-align: center;
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem;
-    }
-    .faq h1, .faq h2, .faq p {
-      text-align: center;
-    }
-  </style>
 </head>
 <body>
   <header>
-    <nav>
+    <nav aria-label="Main navigation">
       <ul>
         <li><a href="about.html">About</a></li>
         <li><a href="data.html">Live Data</a></li>
+        <li><a href="resources.html">Resources</a></li>
         <li><a href="getinvolved.html">Get Involved</a></li>
-        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="faq.html" class="active" aria-current="page">FAQ</a></li>
       </ul>
     </nav>
   </header>
-  <main>
-    <section class="faq">
+  <main class="faq-page">
+    <section class="faq-intro">
+      <p class="eyebrow">Help and guidance</p>
       <h1>Frequently Asked Questions</h1>
+      <p>Find information about the sensor, LoRaWAN connectivity, building resources and available project data.</p>
+    </section>
 
-      <h2>General Questions</h2>
-      <p><strong>How do I find my latitude and longitude?</strong></p>
-      <p>You can use Google Maps. Tap and hold your deployment location to get the coordinates.</p>
+    <section class="faq-group" aria-labelledby="faq-lorawan">
+      <h2 id="faq-lorawan">LoRaWAN and sensor operation</h2>
+      <details class="faq-item">
+        <summary>What is LoRaWAN?</summary>
+        <p>LoRaWAN is a low-power wide-area networking protocol for connecting battery-powered devices through compatible gateways. Urban Heat Sense sensors use it to transmit environmental measurements to the project data platform.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do I need Wi-Fi to operate the sensor?</summary>
+        <p>No. The sensor sends data over LoRaWAN. It needs LoRaWAN network coverage and the appropriate network configuration; it does not use your home Wi-Fi connection.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What is the battery life?</summary>
+        <p>LoRaWAN is designed for low-power operation, and some battery-powered LoRaWAN devices are designed to operate for years. The actual battery life of this sensor depends on its battery, configuration, measurement and transmission settings, and operating conditions.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How frequently are measurements collected?</summary>
+        <p>The current project deployment collects air-temperature measurements every five minutes. The board's reserved pins can also be used to configure the measurement interval to suit your requirements.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Can I use the sensor outside London?</summary>
+        <p>Yes. The project aims to support a global sensor network, including deployments outside London. A deployment requires compatible LoRaWAN coverage and network access at the location.</p>
+      </details>
+    </section>
 
-      <h2>Privacy and Ethics</h2>
-      <p><strong>How is my privacy protected?</strong></p>
-      <p>Your data is anonymized and used solely for research purposes. Photos are optional and will not be shared without your consent.</p>
+    <section class="faq-group" aria-labelledby="faq-build">
+      <h2 id="faq-build">Building and hardware files</h2>
+      <details class="faq-item">
+        <summary>Can I build my own sensor?</summary>
+        <p>Yes. The PCB manufacturing archive and the base, middle and top enclosure STL files are available from the <a href="resources.html">Resources page</a>. The page lists the hardware files shared for building the sensor.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Where can I download the PCB files?</summary>
+        <p>Download the PCB Gerber and drill archive from the <a href="resources.html">Resources page</a>. The archive includes manufacturing layers and drill files.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Where can I download the 3D enclosure?</summary>
+        <p>The base, middle and top STL files for the Stevenson screen are available on the <a href="resources.html">Resources page</a>.</p>
+      </details>
+    </section>
 
-      <p><strong>Has this project received ethical approval?</strong></p>
-      <p>Yes, the project has been reviewed and approved by UCL's ethics board.</p>
+    <section class="faq-group" aria-labelledby="faq-data">
+      <h2 id="faq-data">Data and access</h2>
+      <details class="faq-item">
+        <summary>Can I access historical sensor data?</summary>
+        <p>The repository provides the QEOP Raw Data workbook. LoRaWAN network data and metadata are planned for publication through IEEE DataPort soon. Check the <a href="resources.html">Resources page</a> for current availability. The data are for non-commercial research use only. Please obtain permission from the project team before any other use.</p>
+      </details>
+      <details class="faq-item">
+        <summary>I don't see my sensor on the map. What should I do?</summary>
+        <p>If your sensor's data are not visible within three working days of deployment, contact <a href="mailto:dongyi.ma.21@ucl.ac.uk">Dongyi Ma (Mandy)</a>.</p>
+      </details>
+    </section>
 
-      <h2>Data Availability</h2>
-      <p><strong>I don't see my data on the map after 3 days. What should I do?</strong></p>
-      <p>If your data is not visible on the live map within 3 working days, please contact <a href="mailto:dongyi.ma.21@ucl.ac.uk">dongyi.ma.21@ucl.ac.uk</a>.</p>
-
+    <section class="faq-group" aria-labelledby="faq-participation">
+      <h2 id="faq-participation">Participation and privacy</h2>
+      <details class="faq-item">
+        <summary>How do I find my latitude and longitude?</summary>
+        <p>You can use a mapping application such as Google Maps. Select or press and hold your deployment location to view its coordinates.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How is my privacy protected?</summary>
+        <p>Project information states that participant data are anonymised and used for research. Photos are optional and are not shared without consent. Please refer to the participant information and consent form for full details.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Has this project received ethical approval?</summary>
+        <p>The project information states that the study has been reviewed and approved by UCL's ethics board. Contact the project team if you need further details.</p>
+      </details>
     </section>
   </main>
   <footer>
